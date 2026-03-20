@@ -1,6 +1,5 @@
 # SchoolPrepar – TP2 Symfony
 # KPETIGO Florentin – GL – UE IT 232 – 2025/2026
-# =====================================================
 
 ## STRUCTURE LIVRÉE
 ```
@@ -42,11 +41,11 @@ src/Controller/
 └── AdminUtilisateurController.php  → route /admin/utilisateurs
 ```
 
-## ÉTAPE 1 — Copier les contrôleurs dans ton projet
+## ÉTAPE 1 — Copier les contrôleurs dans le projet
 Copie tous les fichiers de src/Controller/ dans ton projet :
 → SchoolPrepar/src/Controller/
 
-## ÉTAPE 2 — Copier les templates dans ton projet
+## ÉTAPE 2 — Copier les templates dans le projet
 Copie tout le dossier templates/ dans ton projet :
 → SchoolPrepar/templates/
 (Supprime les anciens dossiers home/ et course/ si tu veux repartir propre)
@@ -78,7 +77,3 @@ Le fichier schoolprepar.css → SchoolPrepar/public/front/assets/css/schoolprepa
   http://localhost:8000/admin/etablissements   → Admin établissements
   http://localhost:8000/admin/utilisateurs     → Admin utilisateurs (avec modals)
 
-## ÉTAPE 6 — Git + Livraison
-  git add .
-  git commit -m "TP2 : Routage, vues dynamiques Twig, templates front + admin"
-  git push
