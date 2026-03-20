@@ -3,16 +3,12 @@
 Application web de gestion de préparations scolaires développée avec Symfony.  
 Ce projet a été réalisé dans le cadre d’un travail pratique sur le framework Symfony.
 
----
-
 ## Table des matières
 - [Fonctionnalités](#fonctionnalités)
 - [Prérequis](#prérequis)
 - [Installation](#installation)
 - [Technologies utilisées](#technologies-utilisées)
 - [Auteur](#auteur)
-
----
 
 ## Fonctionnalités
 - Page d’accueil dynamique
