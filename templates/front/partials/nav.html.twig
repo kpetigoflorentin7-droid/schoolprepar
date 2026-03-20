@@ -1,0 +1,36 @@
+{# templates/front/partials/nav.html.twig #}
+<header class="header-area header-sticky">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <nav class="main-nav">
+          <a href="{{ path('app_home') }}" class="logo">School<span>Prepar</span></a>
+          <ul class="nav">
+            <li class="scroll-to-section">
+              <a href="{{ path('app_home') }}" class="{{ app.request.attributes.get('_route') == 'app_home' ? 'active' : '' }}">Accueil</a>
+            </li>
+            <li>
+              <a href="{{ path('app_filieres') }}" class="{{ app.request.attributes.get('_route') starts with 'app_filiere' ? 'active' : '' }}">Filières</a>
+            </li>
+            <li>
+              <a href="{{ path('app_etablissements') }}" class="{{ app.request.attributes.get('_route') starts with 'app_etablissement' ? 'active' : '' }}">Établissements</a>
+            </li>
+            <li class="has-sub">
+              <a href="javascript:void(0)">Pages</a>
+              <ul class="sub-menu">
+                <li><a href="{{ path('app_filieres') }}">Filières &amp; Établissements</a></li>
+                <li><a href="{{ path('app_webinaires') }}">Webinaires</a></li>
+                <li><a href="{{ path('app_webinaire_show', {id: 1}) }}">Détail Webinaire</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="{{ path('app_webinaires') }}" class="{{ app.request.attributes.get('_route') starts with 'app_webinaire' ? 'active' : '' }}">Webinaires</a>
+            </li>
+            <li class="scroll-to-section"><a href="{{ path('app_home') }}#contact">Contact</a></li>
+          </ul>
+          <a class="menu-trigger"><span>Menu</span></a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>

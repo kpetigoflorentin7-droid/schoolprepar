@@ -1,0 +1,103 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}{{ filiere.nom }} – SchoolPrepar{% endblock %}
+
+{% block body %}
+
+  {# ── Heading ──────────────────────────────────────────────── #}
+  <section class="heading-page header-text" id="top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h6>Détails de la filière</h6>
+          <h2>{{ filiere.nom }}</h2>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# ── Détail filière ───────────────────────────────────────── #}
+  <section class="meetings-page" id="meetings">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="meeting-single-item">
+                <div class="thumb">
+                  <div class="price"><span>Gratuit</span></div>
+                  <div class="date"><h6>{{ filiere.mois }} <span>{{ filiere.jour }}</span></h6></div>
+                  <a href="#">
+                    <img src="{{ asset('front/assets/images/' ~ filiere.image) }}" alt="{{ filiere.nom }}">
+                  </a>
+                </div>
+                <div class="down-content">
+                  <span class="badge-filiere" style="font-size:0.85rem; padding: 4px 14px; margin-bottom:12px;">
+                    {{ filiere.domaine }}
+                  </span>
+                  <a href="#"><h4>{{ filiere.nom }}</h4></a>
+                  <p>{{ filiere.intervenant }}</p>
+                  <p class="description">{{ filiere.description_longue }}</p>
+
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="hours">
+                        <h5>Durée</h5>
+                        <p>{{ filiere.duree }}</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="location">
+                        <h5>Niveau d'accès</h5>
+                        <p>{{ filiere.niveau_acces }}</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="book now">
+                        <h5>Contact</h5>
+                        <p>contact@schoolprepar.tg<br>+228 XX XX XX XX</p>
+                      </div>
+                    </div>
+
+                    {% if filiere.debouches is defined and filiere.debouches %}
+                    <div class="col-lg-12" style="margin-top:16px;">
+                      <h5 style="color:#1a3c6e; font-weight:700;">Débouchés professionnels</h5>
+                      <ul>
+                        {% for debouche in filiere.debouches %}
+                        <li>{{ debouche }}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                    {% endif %}
+
+                    <div class="col-lg-12">
+                      <div class="share">
+                        <h5>Partager :</h5>
+                        <ul>
+                          <li><a href="#">Facebook</a>,</li>
+                          <li><a href="#">Twitter</a>,</li>
+                          <li><a href="#">LinkedIn</a>,</li>
+                          <li><a href="#">WhatsApp</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            {# Bouton retour #}
+            <div class="col-lg-12">
+              <div class="main-button-red">
+                <a href="{{ path('app_filieres') }}">← Retour à la liste des filières</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

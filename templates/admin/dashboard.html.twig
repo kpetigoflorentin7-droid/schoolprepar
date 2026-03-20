@@ -1,0 +1,141 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Dashboard – Admin SchoolPrepar{% endblock %}
+{% block page_title %}Tableau de Bord{% endblock %}
+{% block breadcrumb %}<li class="breadcrumb-item active">Dashboard</li>{% endblock %}
+
+{% block body %}
+
+  {# ── Cards statistiques ───────────────────────────────────── #}
+  <div class="row">
+    <div class="col-lg-3 col-6">
+      <div class="small-box bg-sp-blue">
+        <div class="inner">
+          <h3>{{ stats.filieres }}</h3>
+          <p>Filières</p>
+        </div>
+        <div class="icon"><i class="fas fa-book-open"></i></div>
+        <a href="{{ path('admin_filieres') }}" class="small-box-footer">Gérer <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <div class="col-lg-3 col-6">
+      <div class="small-box bg-sp-accent">
+        <div class="inner">
+          <h3>{{ stats.etablissements }}</h3>
+          <p>Établissements</p>
+        </div>
+        <div class="icon"><i class="fas fa-university"></i></div>
+        <a href="{{ path('admin_etablissements') }}" class="small-box-footer">Gérer <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <div class="col-lg-3 col-6">
+      <div class="small-box bg-sp-green">
+        <div class="inner">
+          <h3>{{ stats.utilisateurs }}</h3>
+          <p>Utilisateurs</p>
+        </div>
+        <div class="icon"><i class="fas fa-users"></i></div>
+        <a href="{{ path('admin_utilisateurs') }}" class="small-box-footer">Gérer <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <div class="col-lg-3 col-6">
+      <div class="small-box bg-sp-dark">
+        <div class="inner">
+          <h3>{{ stats.conseillers }}</h3>
+          <p>Conseillers</p>
+        </div>
+        <div class="icon"><i class="fas fa-user-tie"></i></div>
+        <a href="#" class="small-box-footer">Voir <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  {# ── Tableau utilisateurs récents ─────────────────────────── #}
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-header sp-header">
+          <h3 class="card-title"><i class="fas fa-users mr-2"></i>Utilisateurs récents</h3>
+          <div class="card-tools">
+            <a href="{{ path('admin_utilisateurs') }}" class="btn btn-sm btn-light">Voir tous</a>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Rôle</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for user in utilisateurs_recents %}
+              <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                  <span class="badge badge-role badge-{{ user.role }}">{{ user.role|capitalize }}</span>
+                </td>
+                <td>
+                  <span class="status-dot {{ user.statut }}"></span>
+                  {{ user.statut == 'active' ? 'Actif' : (user.statut == 'pending' ? 'En attente' : 'Inactif') }}
+                </td>
+              </tr>
+              {% else %}
+              <tr><td colspan="5" class="text-center text-muted">Aucun utilisateur</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    {# ── Filières populaires ─────────────────────────────────── #}
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-header sp-header">
+          <h3 class="card-title"><i class="fas fa-fire mr-2"></i>Filières populaires</h3>
+        </div>
+        <div class="card-body">
+          {% for f in filieres_populaires %}
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <strong>{{ f.nom }}</strong><br>
+              <small class="text-muted">{{ f.domaine }}</small>
+            </div>
+            <span class="badge badge-primary badge-pill">{{ f.nb_vues }} vues</span>
+          </div>
+          {% if not loop.last %}<hr class="my-2">{% endif %}
+          {% else %}
+          <p class="text-muted text-center">Aucune donnée</p>
+          {% endfor %}
+        </div>
+      </div>
+
+      {# Webinaires à venir #}
+      <div class="card">
+        <div class="card-header sp-header">
+          <h3 class="card-title"><i class="fas fa-video mr-2"></i>Webinaires à venir</h3>
+        </div>
+        <div class="card-body p-0">
+          <ul class="list-group list-group-flush">
+            {% for w in webinaires_prochains %}
+            <li class="list-group-item">
+              <i class="fas fa-calendar text-warning mr-2"></i>
+              <strong>{{ w.titre }}</strong><br>
+              <small class="text-muted">{{ w.date }}</small>
+            </li>
+            {% else %}
+            <li class="list-group-item text-muted text-center">Aucun webinaire prévu</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

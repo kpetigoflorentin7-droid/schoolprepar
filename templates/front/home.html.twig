@@ -1,0 +1,421 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}SchoolPrepar – Ton avenir commence ici{% endblock %}
+
+{% block body %}
+
+  {# ── Banner vidéo ─────────────────────────────────────────── #}
+  <section class="section main-banner" id="top" data-section="section1">
+    <video autoplay muted loop id="bg-video">
+      <source src="{{ asset('front/assets/images/course-video.mp4') }}" type="video/mp4" />
+    </video>
+    <div class="video-overlay header-text">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="caption">
+              <h6>Bonjour Élèves &amp; Étudiants</h6>
+              <h2>Ton avenir commence ici</h2>
+              <p>SchoolPrepar centralise filières, établissements et débouchés. Passe un quiz d'orientation, prends rendez-vous avec un conseiller et rejoins la communauté éducative.</p>
+              <div class="main-button-red">
+                <div class="scroll-to-section"><a href="#orientation">Commencer l'orientation</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# ── Stats Strip ──────────────────────────────────────────── #}
+  <div class="stats-strip">
+    <div class="container">
+      <div class="row">
+        <div class="col-6 col-md-3 stat-item">
+          <div class="stat-number">{{ stats.filieres }}+</div>
+          <div class="stat-label">Filières référencées</div>
+        </div>
+        <div class="col-6 col-md-3 stat-item">
+          <div class="stat-number">{{ stats.etablissements }}+</div>
+          <div class="stat-label">Établissements</div>
+        </div>
+        <div class="col-6 col-md-3 stat-item">
+          <div class="stat-number">{{ stats.conseillers }}+</div>
+          <div class="stat-label">Conseillers actifs</div>
+        </div>
+        <div class="col-6 col-md-3 stat-item">
+          <div class="stat-number">{{ stats.eleves }}+</div>
+          <div class="stat-label">Élèves orientés</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# ── Services / Modules ───────────────────────────────────── #}
+  <section class="services">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="owl-service-item owl-carousel">
+            <div class="item">
+              <div class="icon"><i class="fa fa-search"></i></div>
+              <div class="down-content">
+                <h4>Recherche de Filières</h4>
+                <p>Explore filières, conditions d'admission et débouchés professionnels en un seul endroit.</p>
+              </div>
+            </div>
+            <div class="item">
+              <div class="icon"><i class="fa fa-user-md"></i></div>
+              <div class="down-content">
+                <h4>Conseillers d'Orientation</h4>
+                <p>Prends rendez-vous avec un conseiller certifié pour un accompagnement personnalisé.</p>
+              </div>
+            </div>
+            <div class="item">
+              <div class="icon"><i class="fa fa-pencil-square-o"></i></div>
+              <div class="down-content">
+                <h4>Quiz d'Orientation</h4>
+                <p>Découvre ta personnalité et obtiens des recommandations adaptées à ton profil.</p>
+              </div>
+            </div>
+            <div class="item">
+              <div class="icon"><i class="fa fa-comments"></i></div>
+              <div class="down-content">
+                <h4>Chat &amp; Forum</h4>
+                <p>Échange avec conseillers, anciens élèves et professionnels dans notre communauté.</p>
+              </div>
+            </div>
+            <div class="item">
+              <div class="icon"><i class="fa fa-calendar"></i></div>
+              <div class="down-content">
+                <h4>Webinaires</h4>
+                <p>Inscris-toi aux webinaires animés par des professionnels de ton secteur cible.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# ── Webinaires à venir ───────────────────────────────────── #}
+  <section class="upcoming-meetings" id="webinaires">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-heading"><h2>Webinaires à Venir</h2></div>
+        </div>
+        <div class="col-lg-4">
+          <div class="categories">
+            <h4>Domaines</h4>
+            <ul>
+              <li><a href="{{ path('app_filieres') }}">Informatique &amp; Numérique</a></li>
+              <li><a href="{{ path('app_filieres') }}">Santé &amp; Médecine</a></li>
+              <li><a href="{{ path('app_filieres') }}">Droit &amp; Sciences Politiques</a></li>
+              <li><a href="{{ path('app_filieres') }}">Commerce &amp; Finance</a></li>
+              <li><a href="{{ path('app_filieres') }}">Ingénierie &amp; BTP</a></li>
+            </ul>
+            <div class="main-button-red">
+              <a href="{{ path('app_webinaires') }}">Tous les Webinaires</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="row">
+            {% for w in webinaires %}
+            <div class="col-lg-6">
+              <div class="meeting-item">
+                <div class="thumb">
+                  <div class="price"><span>Gratuit</span></div>
+                  <a href="{{ path('app_webinaire_show', {id: w.id}) }}">
+                    <img src="{{ asset('front/assets/images/' ~ w.image) }}" alt="{{ w.titre }}">
+                  </a>
+                </div>
+                <div class="down-content">
+                  <div class="date"><h6>{{ w.mois }} <span>{{ w.jour }}</span></h6></div>
+                  <span class="badge-filiere">{{ w.domaine }}</span>
+                  <a href="{{ path('app_webinaire_show', {id: w.id}) }}"><h4>{{ w.titre }}</h4></a>
+                  <p>{{ w.description }}</p>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# ── Orientation / Quiz ───────────────────────────────────── #}
+  <section class="apply-now" id="orientation">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="item"><h3>Orientation</h3><p>Trouve ta voie grâce à nos conseillers et outils personnalisés.</p></div>
+          <div class="item"><h3>Quiz</h3><p>Passe le quiz et découvre les filières qui te correspondent.</p></div>
+          <div class="item"><h3>Mentorat</h3><p>Connecte-toi avec des anciens élèves et des professionnels.</p></div>
+        </div>
+        <div class="col-lg-8">
+          {# Accordéon Bootstrap collapse — une seule question ouverte à la fois #}
+          <div id="accordionFAQ">
+
+            <div style="background:#fff; border-radius:8px; margin-bottom:10px; box-shadow:0 2px 8px rgba(0,0,0,0.12);">
+              <div style="padding:18px 24px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-weight:700; color:#1a3c6e;"
+                   data-toggle="collapse" data-target="#faq1" aria-expanded="true">
+                Comment fonctionne le quiz d'orientation ?
+                <span style="font-size:1.3rem; color:#f5a623; font-weight:400;">+</span>
+              </div>
+              <div id="faq1" class="collapse show" data-parent="#accordionFAQ">
+                <div style="padding:0 24px 16px; color:#666; border-top:1px solid #eee; padding-top:12px;">
+                  Le quiz analyse tes intérêts, aptitudes et valeurs pour te recommander des filières adaptées à ton profil.
+                </div>
+              </div>
+            </div>
+
+            <div style="background:#fff; border-radius:8px; margin-bottom:10px; box-shadow:0 2px 8px rgba(0,0,0,0.12);">
+              <div style="padding:18px 24px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-weight:700; color:#1a3c6e;"
+                   data-toggle="collapse" data-target="#faq2">
+                Puis-je changer de filière après le quiz ?
+                <span style="font-size:1.3rem; color:#f5a623; font-weight:400;">+</span>
+              </div>
+              <div id="faq2" class="collapse" data-parent="#accordionFAQ">
+                <div style="padding:0 24px 16px; color:#666; border-top:1px solid #eee; padding-top:12px;">
+                  Oui, les recommandations sont indicatives. Tu peux consulter un conseiller pour affiner ton choix.
+                </div>
+              </div>
+            </div>
+
+            <div style="background:#fff; border-radius:8px; margin-bottom:10px; box-shadow:0 2px 8px rgba(0,0,0,0.12);">
+              <div style="padding:18px 24px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-weight:700; color:#1a3c6e;"
+                   data-toggle="collapse" data-target="#faq3">
+                Comment prendre rendez-vous avec un conseiller ?
+                <span style="font-size:1.3rem; color:#f5a623; font-weight:400;">+</span>
+              </div>
+              <div id="faq3" class="collapse" data-parent="#accordionFAQ">
+                <div style="padding:0 24px 16px; color:#666; border-top:1px solid #eee; padding-top:12px;">
+                  Connecte-toi à la plateforme, choisis un conseiller et sélectionne un créneau disponible dans son calendrier.
+                </div>
+              </div>
+            </div>
+
+            <div style="background:#fff; border-radius:8px; margin-bottom:10px; box-shadow:0 2px 8px rgba(0,0,0,0.12);">
+              <div style="padding:18px 24px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-weight:700; color:#1a3c6e;"
+                   data-toggle="collapse" data-target="#faq4">
+                La plateforme est-elle gratuite ?
+                <span style="font-size:1.3rem; color:#f5a623; font-weight:400;">+</span>
+              </div>
+              <div id="faq4" class="collapse" data-parent="#accordionFAQ">
+                <div style="padding:0 24px 16px; color:#666; border-top:1px solid #eee; padding-top:12px;">
+                  L'accès de base est gratuit. Des fonctionnalités avancées comme le mentorat personnalisé peuvent nécessiter une inscription.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# ── Filières populaires ──────────────────────────────────── #}
+  <section class="our-courses" id="courses">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-heading"><h2>Filières Populaires</h2></div>
+        </div>
+        <div class="col-lg-12">
+          <div class="owl-courses-item owl-carousel">
+            {% for f in filieres_vedettes %}
+            <div class="item">
+              <img src="{{ asset('front/assets/images/' ~ f.image) }}" alt="{{ f.nom }}">
+              <div class="down-content">
+                <h4>{{ f.nom }}</h4>
+                <div class="info">
+                  <div class="row">
+                    <div class="col-8">
+                      <ul>{% for i in 1..f.etoiles %}<li><i class="fa fa-star"></i></li>{% endfor %}</ul>
+                    </div>
+                    <div class="col-4"><span>{{ f.niveau }}</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# ── Chiffres clés ────────────────────────────────────────── #}
+  <section class="our-facts">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col-lg-12"><h2>SchoolPrepar en Chiffres</h2></div>
+            <div class="col-lg-6">
+              <div class="count-area-content percentage">
+                <div class="count-digit">92</div>
+                <div class="count-title">Élèves satisfaits</div>
+              </div>
+              <div class="count-area-content">
+                <div class="count-digit">{{ stats.conseillers }}</div>
+                <div class="count-title">Conseillers certifiés</div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="count-area-content new-students">
+                <div class="count-digit">{{ stats.eleves }}</div>
+                <div class="count-title">Élèves orientés</div>
+              </div>
+              <div class="count-area-content">
+                <div class="count-digit">{{ stats.etablissements }}</div>
+                <div class="count-title">Établissements partenaires</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 align-self-center">
+          <div class="video">
+            <a href="https://www.youtube.com/watch?v=HndV87XpkWg" target="_blank">
+              <img src="{{ asset('front/assets/images/play-icon.png') }}" alt="Voir la vidéo de présentation">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# ── Contact ──────────────────────────────────────────────── #}
+  <section id="contact" style="background:#f0f4fb; padding:60px 0;">
+    <div class="container">
+      <div class="row">
+
+        {# Formulaire – fond blanc explicite pour écraser le CSS du template #}
+        <div class="col-lg-8 align-self-center">
+          <div style="background:#fff; border-radius:16px; padding:36px 40px; box-shadow:0 4px 20px rgba(26,60,110,0.08);">
+            <h2 style="color:#1a3c6e; font-weight:800; margin-bottom:8px;">Nous Contacter</h2>
+            <p style="color:#888; margin-bottom:28px;">Une question sur une filière ? Un conseiller peut vous aider.</p>
+
+            <form id="contact-form" action="" method="post">
+              <div class="row">
+                <div class="col-md-4" style="margin-bottom:16px;">
+                  <input name="nom" type="text" placeholder="Votre nom *" required
+                    style="width:100%; padding:12px 16px; background:#f7f9fd; border:2px solid #e4ebf5; border-radius:8px; font-family:Poppins,sans-serif; font-size:0.85rem; color:#333; outline:none; box-sizing:border-box;"
+                    onfocus="this.style.borderColor='#1a3c6e'; this.style.background='#fff';"
+                    onblur="this.style.borderColor='#e4ebf5'; this.style.background='#f7f9fd';">
+                </div>
+                <div class="col-md-4" style="margin-bottom:16px;">
+                  <input name="email" type="email" placeholder="Votre email *" required
+                    style="width:100%; padding:12px 16px; background:#f7f9fd; border:2px solid #e4ebf5; border-radius:8px; font-family:Poppins,sans-serif; font-size:0.85rem; color:#333; outline:none; box-sizing:border-box;"
+                    onfocus="this.style.borderColor='#1a3c6e'; this.style.background='#fff';"
+                    onblur="this.style.borderColor='#e4ebf5'; this.style.background='#f7f9fd';">
+                </div>
+                <div class="col-md-4" style="margin-bottom:16px;">
+                  <input name="sujet" type="text" placeholder="Sujet *" required
+                    style="width:100%; padding:12px 16px; background:#f7f9fd; border:2px solid #e4ebf5; border-radius:8px; font-family:Poppins,sans-serif; font-size:0.85rem; color:#333; outline:none; box-sizing:border-box;"
+                    onfocus="this.style.borderColor='#1a3c6e'; this.style.background='#fff';"
+                    onblur="this.style.borderColor='#e4ebf5'; this.style.background='#f7f9fd';">
+                </div>
+                <div class="col-12" style="margin-bottom:20px;">
+                  <textarea name="message" rows="5" placeholder="Votre message..." required
+                    style="width:100%; padding:14px 16px; background:#f7f9fd; border:2px solid #e4ebf5; border-radius:8px; font-family:Poppins,sans-serif; font-size:0.85rem; color:#333; outline:none; resize:vertical; box-sizing:border-box;"
+                    onfocus="this.style.borderColor='#1a3c6e'; this.style.background='#fff';"
+                    onblur="this.style.borderColor='#e4ebf5'; this.style.background='#f7f9fd';"></textarea>
+                </div>
+                <div class="col-12">
+                  <button type="submit"
+                    style="background:#f5a623; color:#fff; border:none; padding:14px 40px; border-radius:8px; font-family:Poppins,sans-serif; font-weight:700; font-size:0.88rem; letter-spacing:0.5px; cursor:pointer; transition:background .2s; display:inline-flex; align-items:center; gap:8px;"
+                    onmouseover="this.style.background='#d4891a'" onmouseout="this.style.background='#f5a623'">
+                    <i class="fa fa-paper-plane"></i> ENVOYER LE MESSAGE
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        {# Infos contact – cartes lisibles sur fond clair #}
+        <div class="col-lg-4" style="padding-top:16px;">
+          <div style="display:flex; flex-direction:column; gap:14px;">
+
+            {% set contacts = [
+              {icon: 'fa-phone',     label: 'Téléphone', value: '+228 91 23 45 67'},
+              {icon: 'fa-envelope',  label: 'Email',     value: 'kpetigo.florentin@ipnet.tg'},
+              {icon: 'fa-map-marker',label: 'Adresse',   value: 'Lomé, Togo'},
+              {icon: 'fa-globe',     label: 'Site Web',  value: 'www.schoolprepar.tg'}
+            ] %}
+
+            {% for c in contacts %}
+            <div style="background:#fff; border-radius:12px; padding:16px 20px; box-shadow:0 2px 12px rgba(26,60,110,0.08); border-left:4px solid #f5a623; display:flex; align-items:center; gap:14px;">
+              <div style="background:#f0f4fb; border-radius:50%; width:44px; height:44px; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
+                <i class="fa {{ c.icon }}" style="color:#1a3c6e; font-size:1.1rem;"></i>
+              </div>
+              <div>
+                <div style="font-size:0.72rem; color:#888; text-transform:uppercase; letter-spacing:1px; margin-bottom:3px;">{{ c.label }}</div>
+                <div style="font-weight:700; font-size:0.92rem; color:#1a3c6e;">{{ c.value }}</div>
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+  /* ── Navigation scroll ─────────────────────────── */
+  $('.nav li:first').addClass('active');
+  var showSection = function(section, isAnimate) {
+    var direction = section.replace(/#/, ''),
+        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+        reqSectionPos = reqSection.offset().top - 0;
+    if (isAnimate) { $('body, html').animate({ scrollTop: reqSectionPos }, 800); }
+    else { $('body, html').scrollTop(reqSectionPos); }
+  };
+  $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function(e) {
+    e.preventDefault(); showSection($(this).attr('href'), true);
+  });
+
+  /* ── Accordéon FAQ – une seule ouverte à la fois ── */
+  $(document).ready(function() {
+    $('.sp-faq-head').on('click', function() {
+      var target  = $(this).data('target');
+      var $body   = $(target);
+      var $icon   = $(this).find('.sp-faq-icon');
+      var isOpen  = $body.is(':visible');
+
+      // Ferme toutes les autres
+      $('.sp-faq-body').slideUp(250);
+      $('.sp-faq-icon').text('+');
+      $('.sp-faq-head').css('color', '');
+
+      if (!isOpen) {
+        $body.slideDown(250);
+        $icon.text('−');
+        $(this).css('color', '#f5a623');
+      }
+    });
+
+    /* Ouvre la première par défaut */
+    $('.sp-faq-head').first().trigger('click');
+  });
+
+  /* ── Formulaire contact – feedback visuel ─────── */
+  $('#contact-form').on('submit', function(e) {
+    e.preventDefault();
+    var $btn = $(this).find('button[type=submit]');
+    $btn.html('<i class="fa fa-check" style="margin-right:8px;"></i>MESSAGE ENVOYÉ !').css('background','#27ae60');
+    setTimeout(function() {
+      $btn.html('<i class="fa fa-paper-plane" style="margin-right:8px;"></i>ENVOYER LE MESSAGE').css('background','#f5a623');
+    }, 3000);
+  });
+</script>
+{% endblock %}

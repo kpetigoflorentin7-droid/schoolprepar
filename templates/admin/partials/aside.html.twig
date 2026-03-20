@@ -1,0 +1,78 @@
+{# templates/admin/partials/aside.html.twig #}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  {# Brand #}
+  <a href="{{ path('admin_dashboard') }}" class="brand-link">
+    <i class="fas fa-graduation-cap brand-image ml-2" style="color:#f5a623; font-size:1.4rem;"></i>
+    <span class="brand-text ml-2">School<span>Prepar</span></span>
+  </a>
+
+  <div class="sidebar">
+    {# Profil mini #}
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <i class="fas fa-user-circle fa-2x" style="color:#b8cae8;"></i>
+      </div>
+      <div class="info">
+        <a href="#" class="d-block" style="color:#fff;">Administrateur</a>
+        <span style="color:#9ab0cc; font-size:0.75rem;">Super Admin</span>
+      </div>
+    </div>
+
+    {# Menu principal #}
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+        {# Dashboard #}
+        <li class="nav-item">
+          <a href="{{ path('admin_dashboard') }}" class="nav-link {{ app.request.attributes.get('_route') == 'admin_dashboard' ? 'active' : '' }}">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>Dashboard</p>
+          </a>
+        </li>
+
+        {# Filières #}
+        <li class="nav-item">
+          <a href="{{ path('admin_filieres') }}" class="nav-link {{ app.request.attributes.get('_route') starts with 'admin_filiere' ? 'active' : '' }}">
+            <i class="nav-icon fas fa-book-open"></i>
+            <p>Gestion des Filières</p>
+          </a>
+        </li>
+
+        {# Établissements #}
+        <li class="nav-item">
+          <a href="{{ path('admin_etablissements') }}" class="nav-link {{ app.request.attributes.get('_route') starts with 'admin_etablissement' ? 'active' : '' }}">
+            <i class="nav-icon fas fa-university"></i>
+            <p>Établissements</p>
+          </a>
+        </li>
+
+        {# Utilisateurs #}
+        <li class="nav-item">
+          <a href="{{ path('admin_utilisateurs') }}" class="nav-link {{ app.request.attributes.get('_route') starts with 'admin_utilisateur' ? 'active' : '' }}">
+            <i class="nav-icon fas fa-users"></i>
+            <p>Utilisateurs</p>
+          </a>
+        </li>
+
+        {# Webinaires #}
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-video"></i>
+            <p>Webinaires</p>
+          </a>
+        </li>
+
+        {# Séparateur #}
+        <li class="nav-header" style="color:#9ab0cc; font-size:0.7rem; letter-spacing:1px;">SITE</li>
+
+        <li class="nav-item">
+          <a href="{{ path('app_home') }}" class="nav-link" target="_blank">
+            <i class="nav-icon fas fa-external-link-alt"></i>
+            <p>Voir le site</p>
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+  </div>
+</aside>

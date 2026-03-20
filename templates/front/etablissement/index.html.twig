@@ -1,0 +1,45 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}Établissements – SchoolPrepar{% endblock %}
+
+{% block body %}
+
+  <section class="heading-page header-text" id="top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h6>Nos partenaires</h6>
+          <h2>Établissements</h2>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="meetings-page" id="etablissements">
+    <div class="container">
+      <div class="row">
+        {% for etab in etablissements %}
+        <div class="col-lg-4 mb-4">
+          <div class="meeting-item">
+            <div class="thumb">
+              <div class="price"><span>{{ etab.type }}</span></div>
+              <img src="{{ asset('front/assets/images/meeting-01.jpg') }}" alt="{{ etab.nom }}">
+            </div>
+            <div class="down-content">
+              <span class="badge-domaine">{{ etab.ville }}</span>
+              <h4 style="color:#1a3c6e; font-weight:700; margin-top:8px;">{{ etab.nom }}</h4>
+              <p>{{ etab.description }}</p>
+              {% if etab.filieres is defined %}
+                <p><strong>Filières :</strong> {{ etab.filieres|join(', ') }}</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% else %}
+          <div class="col-12"><p class="text-center text-muted">Aucun établissement disponible.</p></div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

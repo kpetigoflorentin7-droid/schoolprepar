@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{% block title %}SchoolPrepar{% endblock %}</title>
+
+  {# Google Fonts #}
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  {# Vendor CSS – fichiers à placer dans public/front/vendor/ #}
+  <link href="{{ asset('front/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('front/assets/css/fontawesome.css') }}">
+  <link rel="stylesheet" href="{{ asset('front/assets/css/templatemo-edu-meeting.css') }}">
+  <link rel="stylesheet" href="{{ asset('front/assets/css/owl.css') }}">
+  <link rel="stylesheet" href="{{ asset('front/assets/css/lightbox.css') }}">
+
+  {# Thème SchoolPrepar #}
+  <link rel="stylesheet" href="{{ asset('front/assets/css/schoolprepar.css') }}">
+
+  {% block stylesheets %}{% endblock %}
+</head>
+<body>
+
+  {# ── Sub Header ─────────────────────────────────────────── #}
+  {% include 'front/partials/subheader.html.twig' %}
+
+  {# ── Navigation principale ───────────────────────────────── #}
+  {% include 'front/partials/nav.html.twig' %}
+
+  {# ── Contenu de la page ──────────────────────────────────── #}
+  {% block body %}{% endblock %}
+
+  {# ── Footer ──────────────────────────────────────────────── #}
+  {% include 'front/partials/footer.html.twig' %}
+
+  {# Vendor JS #}
+  <script src="{{ asset('front/vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ asset('front/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('front/assets/js/isotope.min.js') }}"></script>
+  <script src="{{ asset('front/assets/js/owl-carousel.js') }}"></script>
+  <script src="{{ asset('front/assets/js/lightbox.js') }}"></script>
+  <script src="{{ asset('front/assets/js/tabs.js') }}"></script>
+  <script src="{{ asset('front/assets/js/video.js') }}"></script>
+  <script src="{{ asset('front/assets/js/slick-slider.js') }}"></script>
+  <script src="{{ asset('front/assets/js/custom.js') }}"></script>
+
+  {% block javascripts %}{% endblock %}
+</body>
+</html>
