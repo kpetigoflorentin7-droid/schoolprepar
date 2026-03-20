@@ -1,60 +1,84 @@
-# SchoolPrepar 
+# SchoolPrepar – TP2 Symfony
+# KPETIGO Florentin – GL – UE IT 232 – 2025/2026
+# =====================================================
 
-Application web de gestion de préparations scolaires développée avec Symfony.  
-Ce projet a été réalisé dans le cadre d’un travail pratique sur le framework Symfony.
-
-## Table des matières
-- [Fonctionnalités](#fonctionnalités)
-- [Prérequis](#prérequis)
-- [Installation](#installation)
-- [Technologies utilisées](#technologies-utilisées)
-- [Auteur](#auteur)
-
-## Fonctionnalités
-- Page d’accueil dynamique
-- Liste des cours disponibles
-- Architecture MVC avec contrôleurs et templates Twig
-- Navigation simple entre les pages
-- Diagrammes de cas d’utilisation et entité-relation (dossier `docs/`)
-
----
-
-## Prérequis
-- PHP >= 8.1
-- Composer
-- Git (optionnel pour le clonage)
-- Un navigateur web
-
----
-
-## Installation
-
-```bash
-git clone https://github.com/kpetigoflorentin7-droid/schoolprepar.git
-cd schoolprepar
-
-composer install
-
-php -S 127.0.0.1:8000 -t public
+## STRUCTURE LIVRÉE
 ```
----
+templates/
+├── front/
+│   ├── base.html.twig          ← layout principal front
+│   ├── home.html.twig          ← page d'accueil (index.html converti)
+│   ├── partials/
+│   │   ├── subheader.html.twig
+│   │   ├── nav.html.twig
+│   │   └── footer.html.twig
+│   ├── filiere/
+│   │   ├── index.html.twig     ← liste filières (webinaires.html converti)
+│   │   └── show.html.twig      ← détail filière (webinaire-detail.html converti)
+│   └── etablissement/
+│       └── index.html.twig
+└── admin/
+    ├── base.html.twig          ← layout admin (AdminLTE)
+    ├── dashboard.html.twig     ← tableau de bord (admin.html converti)
+    ├── partials/
+    │   ├── nav.html.twig
+    │   ├── aside.html.twig     ← sidebar
+    │   └── footer.html.twig
+    ├── filiere/
+    │   └── index.html.twig
+    ├── etablissement/
+    │   └── index.html.twig
+    └── utilisateur/
+        └── index.html.twig     ← CRUD users (admin-utilisateurs.html converti)
 
-## Technologies
+src/Controller/
+├── HomeController.php              → route /
+├── FiliereController.php           → routes /filieres  /filieres/{id}
+├── EtablissementController.php     → route /etablissements
+├── WebinaireController.php         → routes /webinaires  /webinaires/{id}
+├── AdminDashboardController.php    → route /admin
+├── AdminFiliereController.php      → route /admin/filieres
+├── AdminEtablissementController.php→ route /admin/etablissements
+└── AdminUtilisateurController.php  → route /admin/utilisateurs
+```
 
-Symfony 6.4 (framework PHP)
+## ÉTAPE 1 — Copier les contrôleurs dans ton projet
+Copie tous les fichiers de src/Controller/ dans ton projet :
+→ SchoolPrepar/src/Controller/
 
-Twig (moteur de templates)
+## ÉTAPE 2 — Copier les templates dans ton projet
+Copie tout le dossier templates/ dans ton projet :
+→ SchoolPrepar/templates/
+(Supprime les anciens dossiers home/ et course/ si tu veux repartir propre)
 
-PHP 8.4
+## ÉTAPE 3 — Copier les assets CSS/JS dans public/
+Depuis le template HTML téléchargé (edu-meeting), copie :
+  vendor/  → SchoolPrepar/public/front/vendor/
+  assets/  → SchoolPrepar/public/front/assets/
 
-Git (gestion de versions)
+Depuis AdminLTE téléchargé (adminlte.io), copie :
+  plugins/ → SchoolPrepar/public/admin/plugins/
+  dist/    → SchoolPrepar/public/admin/dist/
 
-Drawio (diagrammes)
+Le fichier schoolprepar.css → SchoolPrepar/public/front/assets/css/schoolprepar.css
+                            → SchoolPrepar/public/admin/assets/css/schoolprepar.css
 
+## ÉTAPE 4 — Lancer le serveur
+  cd SchoolPrepar
+  symfony server:start
 
-## Auteur
-KPETIGO
+## ÉTAPE 5 — Tester les URLs
+  http://localhost:8000/              → Accueil
+  http://localhost:8000/filieres      → Liste filières
+  http://localhost:8000/filieres/1    → Détail filière
+  http://localhost:8000/etablissements→ Établissements
+  http://localhost:8000/webinaires    → Webinaires
+  http://localhost:8000/admin         → Dashboard admin
+  http://localhost:8000/admin/filieres         → Admin filières
+  http://localhost:8000/admin/etablissements   → Admin établissements
+  http://localhost:8000/admin/utilisateurs     → Admin utilisateurs (avec modals)
 
-Email : kpetigoflorentin7@gmail.com
-
-GitHub : @kpetigoflorentin7-droid
+## ÉTAPE 6 — Git + Livraison
+  git add .
+  git commit -m "TP2 : Routage, vues dynamiques Twig, templates front + admin"
+  git push
