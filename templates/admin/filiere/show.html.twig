@@ -1,0 +1,48 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}{{ filiere.nom }}{% endblock %}
+{% block page_title %}{{ filiere.nom }}{% endblock %}
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{{ path('admin_filieres') }}">Filières</a></li>
+  <li class="breadcrumb-item active">Détail</li>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header"><h3 class="card-title">Informations</h3></div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <tr><th style="width:35%">Nom</th><td>{{ filiere.nom }}</td></tr>
+          <tr><th>Domaine</th><td>{{ filiere.domaine ?? '-' }}</td></tr>
+          <tr><th>Durée</th><td>{{ filiere.duree ? filiere.duree~' an(s)' : '-' }}</td></tr>
+          <tr><th>Description</th><td>{{ filiere.description ?? '-' }}</td></tr>
+          <tr><th>Conditions</th><td>{{ filiere.conditions_admission ?? '-' }}</td></tr>
+        </table>
+      </div>
+      <div class="card-footer">
+        <a href="{{ path('admin_filiere_edit', {id: filiere.id}) }}" class="btn btn-warning btn-sm">
+          <i class="fas fa-edit mr-1"></i>Modifier
+        </a>
+        <a href="{{ path('admin_filieres') }}" class="btn btn-default btn-sm ml-2">Retour</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header"><h3 class="card-title">Établissements</h3></div>
+      <div class="card-body p-0">
+        <ul class="list-group list-group-flush">
+          {% for etab in etablissements %}
+            <li class="list-group-item">
+              <i class="fas fa-university mr-2 text-primary"></i>{{ etab.nom }} — {{ etab.ville ?? 'Adresse non renseignée' }}
+            </li>
+          {% else %}
+            <li class="list-group-item text-muted">Aucun établissement associé.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

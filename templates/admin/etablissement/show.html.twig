@@ -1,0 +1,49 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}{{ etablissement.nom }}{% endblock %}
+{% block page_title %}{{ etablissement.nom }}{% endblock %}
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{{ path('admin_etablissements') }}">Établissements</a></li>
+  <li class="breadcrumb-item active">Détail</li>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header"><h3 class="card-title">Informations</h3></div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <tr><th style="width:35%">Nom</th><td>{{ etablissement.nom }}</td></tr>
+          <tr><th>Ville</th><td>{{ etablissement.ville ?? '-' }}</td></tr>
+          <tr><th>Adresse</th><td>{{ etablissement.adresse ?? '-' }}</td></tr>
+          <tr><th>Email</th><td>{{ etablissement.email ?? '-' }}</td></tr>
+          <tr><th>Téléphone</th><td>{{ etablissement.telephone ?? '-' }}</td></tr>
+        </table>
+      </div>
+      <div class="card-footer">
+        <a href="{{ path('admin_etablissement_edit', {id: etablissement.id}) }}" class="btn btn-warning btn-sm">
+          <i class="fas fa-edit mr-1"></i>Modifier
+        </a>
+        <a href="{{ path('admin_etablissements') }}" class="btn btn-default btn-sm ml-2">Retour</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header"><h3 class="card-title">Filières proposées</h3></div>
+      <div class="card-body p-0">
+        <ul class="list-group list-group-flush">
+          {% for f in filieres %}
+            <li class="list-group-item d-flex justify-content-between">
+              <span><i class="fas fa-book-open mr-2 text-info"></i>{{ f.nom }}</span>
+              <span class="badge badge-secondary">{{ f.domaine ?? 'Non spécifié' }}</span>
+            </li>
+          {% else %}
+            <li class="list-group-item text-muted">Aucune filière associée.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

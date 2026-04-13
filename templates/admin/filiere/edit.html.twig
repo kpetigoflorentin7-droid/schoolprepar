@@ -1,0 +1,33 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Modifier — {{ filiere.nom }}{% endblock %}
+{% block page_title %}Modifier : {{ filiere.nom }}{% endblock %}
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{{ path('admin_filieres') }}">Filières</a></li>
+  <li class="breadcrumb-item active">Modifier</li>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-md-8">
+    <div class="card card-warning">
+      <div class="card-header"><h3 class="card-title">Modifier la filière</h3></div>
+      {{ form_start(form) }}
+      <div class="card-body">
+        <div class="form-group">{{ form_label(form.nom) }}{{ form_widget(form.nom) }}</div>
+        <div class="row">
+          <div class="col-md-6 form-group">{{ form_label(form.domaine) }}{{ form_widget(form.domaine) }}</div>
+          <div class="col-md-6 form-group">{{ form_label(form.duree) }}{{ form_widget(form.duree) }}</div>
+        </div>
+        <div class="form-group">{{ form_label(form.image) }}{{ form_widget(form.image) }}</div>
+        <div class="form-group">{{ form_label(form.description) }}{{ form_widget(form.description) }}</div>
+        <div class="form-group">{{ form_label(form.conditionsAdmission) }}{{ form_widget(form.conditionsAdmission) }}</div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-warning"><i class="fas fa-save mr-1"></i>Enregistrer</button>
+        <a href="{{ path('admin_filieres') }}" class="btn btn-default ml-2">Annuler</a>
+      </div>
+      {{ form_end(form) }}
+    </div>
+  </div>
+</div>
+{% endblock %}

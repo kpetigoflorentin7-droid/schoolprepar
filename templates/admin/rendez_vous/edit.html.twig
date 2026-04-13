@@ -1,0 +1,35 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Modifier RDV #{{ rdv.id }}{% endblock %}
+{% block page_title %}Modifier rendez-vous #{{ rdv.id }}{% endblock %}
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{{ path('admin_rdv') }}">Rendez-vous</a></li>
+  <li class="breadcrumb-item active">Modifier</li>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-md-8">
+    <div class="card card-warning">
+      <div class="card-header"><h3 class="card-title">Modifier le rendez-vous</h3></div>
+      {{ form_start(form) }}
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 form-group">{{ form_label(form.eleve) }}{{ form_widget(form.eleve) }}</div>
+          <div class="col-md-6 form-group">{{ form_label(form.conseiller) }}{{ form_widget(form.conseiller) }}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 form-group">{{ form_label(form.dateHeure) }}{{ form_widget(form.dateHeure) }}</div>
+          <div class="col-md-6 form-group">{{ form_label(form.mode) }}{{ form_widget(form.mode) }}</div>
+        </div>
+        <div class="form-group">{{ form_label(form.statut) }}{{ form_widget(form.statut) }}</div>
+        <div class="form-group">{{ form_label(form.motif) }}{{ form_widget(form.motif) }}</div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-warning"><i class="fas fa-save mr-1"></i>Enregistrer</button>
+        <a href="{{ path('admin_rdv') }}" class="btn btn-default ml-2">Annuler</a>
+      </div>
+      {{ form_end(form) }}
+    </div>
+  </div>
+</div>
+{% endblock %}

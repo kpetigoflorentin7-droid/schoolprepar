@@ -128,7 +128,7 @@
                 <div class="thumb">
                   <div class="price"><span>Gratuit</span></div>
                   <a href="{{ path('app_webinaire_show', {id: w.id}) }}">
-                    <img src="{{ asset('front/assets/images/' ~ w.image) }}" alt="{{ w.titre }}">
+                    <img src="{{ w.image ?: asset('front/assets/images/meeting-01.jpg') }}" alt="{{ w.titre }}">
                   </a>
                 </div>
                 <div class="down-content">

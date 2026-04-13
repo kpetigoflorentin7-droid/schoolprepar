@@ -23,53 +23,28 @@
         <div class="col-lg-12">
           <div class="row">
 
-            {# Filtres #}
-            <div class="col-lg-12">
-              <div class="filters">
-                <ul>
-                  <li data-filter="*" class="active">Tous</li>
-                  <li data-filter=".info">Informatique</li>
-                  <li data-filter=".sante">Santé</li>
-                  <li data-filter=".commerce">Commerce</li>
-                  <li data-filter=".droit">Droit</li>
-                </ul>
-              </div>
-            </div>
-
             {# Grille des filières #}
             <div class="col-lg-12">
               <div class="row grid">
                 {% for filiere in filieres %}
-                <div class="col-lg-4 templatemo-item-col all {{ filiere.categorie }}">
+                <div class="col-lg-4 templatemo-item-col all">
                   <div class="meeting-item">
                     <div class="thumb">
                       <div class="price"><span>Gratuit</span></div>
                       <a href="{{ path('app_filiere_show', {id: filiere.id}) }}">
-                        <img src="{{ asset('front/assets/images/' ~ filiere.image) }}" alt="{{ filiere.nom }}">
+                        <img src="{{ filiere.image ?: asset('front/assets/images/meeting-01.jpg') }}" alt="{{ filiere.nom }}">
                       </a>
                     </div>
                     <div class="down-content">
-                      <div class="date"><h6>{{ filiere.mois }} <span>{{ filiere.jour }}</span></h6></div>
                       <span class="badge-filiere">{{ filiere.domaine }}</span>
                       <a href="{{ path('app_filiere_show', {id: filiere.id}) }}"><h4>{{ filiere.nom }}</h4></a>
-                      <p>{{ filiere.description }}</p>
+                      <p>{{ filiere.description ?: 'Description bientôt disponible.' }}</p>
                     </div>
                   </div>
                 </div>
                 {% else %}
                   <div class="col-12"><p class="text-center text-muted">Aucune filière disponible pour le moment.</p></div>
                 {% endfor %}
-              </div>
-            </div>
-
-            {# Pagination #}
-            <div class="col-lg-12">
-              <div class="pagination">
-                <ul>
-                  <li class="active"><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                </ul>
               </div>
             </div>
 
@@ -81,16 +56,3 @@
 
 {% endblock %}
 
-{% block javascripts %}
-<script src="{{ asset('front/assets/js/isotope.js') }}"></script>
-<script>
-  $(document).ready(function() {
-    var $grid = $('.grid').isotope({ itemSelector: '.templatemo-item-col', layoutMode: 'fitRows' });
-    $('.filters ul li').on('click', function() {
-      var filterValue = $(this).attr('data-filter');
-      $grid.isotope({ filter: filterValue });
-      $(this).addClass('active').siblings().removeClass('active');
-    });
-  });
-</script>
-{% endblock %}

@@ -1,28 +1,50 @@
 <?php
-// src/Controller/AdminUtilisateurController.php
 namespace App\Controller;
 
+use App\Entity\Utilisateur;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/admin/utilisateurs')]
 class AdminUtilisateurController extends AbstractController
 {
-    #[Route('/admin/utilisateurs', name: 'admin_utilisateurs')]
-    public function index(): Response
+    #[Route('/', name: 'admin_utilisateurs', methods: ['GET'])]
+    public function index(EntityManagerInterface $em): Response
     {
-        $utilisateurs = [
-            ['id'=>1,'nom'=>'Kofi Mensah','email'=>'kofi@example.com','role'=>'eleve','statut'=>'active','date'=>'12/03/2026'],
-            ['id'=>2,'nom'=>'Amina Touré','email'=>'amina@example.com','role'=>'conseiller','statut'=>'active','date'=>'10/03/2026'],
-            ['id'=>3,'nom'=>'Jean Agbodjan','email'=>'jean@example.com','role'=>'eleve','statut'=>'pending','date'=>'15/03/2026'],
-            ['id'=>4,'nom'=>'Dr. Ama Kodjo','email'=>'ama@example.com','role'=>'pro','statut'=>'active','date'=>'05/03/2026'],
-            ['id'=>5,'nom'=>'Superadmin','email'=>'admin@schoolprepar.tg','role'=>'admin','statut'=>'active','date'=>'01/01/2026'],
-            ['id'=>6,'nom'=>'Tété Aklesso','email'=>'tete@example.com','role'=>'eleve','statut'=>'inactive','date'=>'08/03/2026'],
-            ['id'=>7,'nom'=>'Mawuena Dossou','email'=>'mawuena@example.com','role'=>'eleve','statut'=>'active','date'=>'17/03/2026'],
-        ];
-
+        $conn = $em->getConnection();
+        $sql = "SELECT id, nom, prenom, email, telephone, roles FROM utilisateur ORDER BY nom ASC";
+        $result = $conn->executeQuery($sql);
+        
         return $this->render('admin/utilisateur/index.html.twig', [
-            'utilisateurs' => $utilisateurs,
+            'utilisateurs' => $result->fetchAllAssociative(),
         ]);
+    }
+
+    #[Route('/{id}', name: 'admin_utilisateur_show', methods: ['GET'])]
+    public function show(int $id, EntityManagerInterface $em): Response
+    {
+        $conn = $em->getConnection();
+        $sql = "SELECT id, nom, prenom, email, telephone, roles FROM utilisateur WHERE id = :id";
+        $utilisateur = $conn->executeQuery($sql, ['id' => $id])->fetchAssociative();
+        
+        if (!$utilisateur) throw $this->createNotFoundException('Utilisateur non trouvé');
+        
+        return $this->render('admin/utilisateur/show.html.twig', [
+            'utilisateur' => $utilisateur,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'admin_utilisateur_delete', methods: ['POST'])]
+    public function delete(Request $request, Utilisateur $u, EntityManagerInterface $em): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$u->getId(), $request->request->get('_token'))) {
+            $em->remove($u);
+            $em->flush();
+            $this->addFlash('success', 'Utilisateur supprimé.');
+        }
+        return $this->redirectToRoute('admin_utilisateurs');
     }
 }

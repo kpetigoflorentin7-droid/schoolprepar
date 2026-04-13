@@ -22,15 +22,19 @@
         <div class="col-lg-4 mb-4">
           <div class="meeting-item">
             <div class="thumb">
-              <div class="price"><span>{{ etab.type }}</span></div>
-              <img src="{{ asset('front/assets/images/meeting-01.jpg') }}" alt="{{ etab.nom }}">
+              <div class="price"><span>École</span></div>
+              <img src="{{ etab.image ?: asset('front/assets/images/meeting-01.jpg') }}" alt="{{ etab.nom }}">
             </div>
             <div class="down-content">
               <span class="badge-domaine">{{ etab.ville }}</span>
               <h4 style="color:#1a3c6e; font-weight:700; margin-top:8px;">{{ etab.nom }}</h4>
-              <p>{{ etab.description }}</p>
-              {% if etab.filieres is defined %}
-                <p><strong>Filières :</strong> {{ etab.filieres|join(', ') }}</p>
+              <p>{{ etab.adresse ?: 'Adresse non renseignée.' }}</p>
+              {% if etab.filieres is not empty %}
+                <p><strong>Filières :</strong>
+                  {% for filiere in etab.filieres %}
+                    {{ filiere.nom }}{% if not loop.last %}, {% endif %}
+                  {% endfor %}
+                </p>
               {% endif %}
             </div>
           </div>

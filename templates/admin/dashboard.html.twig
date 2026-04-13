@@ -45,7 +45,7 @@
           <p>Conseillers</p>
         </div>
         <div class="icon"><i class="fas fa-user-tie"></i></div>
-        <a href="#" class="small-box-footer">Voir <i class="fas fa-arrow-circle-right"></i></a>
+        <a href="{{ path('admin_utilisateurs') }}" class="small-box-footer">Gérer <i class="fas fa-arrow-circle-right"></i></a>
       </div>
     </div>
   </div>
@@ -94,11 +94,11 @@
       </div>
     </div>
 
-    {# ── Filières populaires ─────────────────────────────────── #}
+    {# ── Filières les plus proposées (vraies données) ───────── #}
     <div class="col-lg-4">
       <div class="card">
         <div class="card-header sp-header">
-          <h3 class="card-title"><i class="fas fa-fire mr-2"></i>Filières populaires</h3>
+          <h3 class="card-title"><i class="fas fa-fire mr-2"></i>Filières les plus proposées</h3>
         </div>
         <div class="card-body">
           {% for f in filieres_populaires %}
@@ -107,7 +107,7 @@
               <strong>{{ f.nom }}</strong><br>
               <small class="text-muted">{{ f.domaine }}</small>
             </div>
-            <span class="badge badge-primary badge-pill">{{ f.nb_vues }} vues</span>
+            <span class="badge badge-primary badge-pill">{{ f.nb_etablissements }} école(s)</span>
           </div>
           {% if not loop.last %}<hr class="my-2">{% endif %}
           {% else %}
@@ -125,9 +125,18 @@
           <ul class="list-group list-group-flush">
             {% for w in webinaires_prochains %}
             <li class="list-group-item">
-              <i class="fas fa-calendar text-warning mr-2"></i>
-              <strong>{{ w.titre }}</strong><br>
-              <small class="text-muted">{{ w.date }}</small>
+              <div class="d-flex align-items-center">
+                <img
+                  src="{{ w.image ?: asset('front/assets/images/meeting-01.jpg') }}"
+                  alt="{{ w.titre }}"
+                  style="width:56px;height:56px;object-fit:cover;border-radius:8px;margin-right:10px;"
+                >
+                <div>
+                  <i class="fas fa-calendar text-warning mr-2"></i>
+                  <strong>{{ w.titre }}</strong><br>
+                  <small class="text-muted">{{ w.date }}</small>
+                </div>
+              </div>
             </li>
             {% else %}
             <li class="list-group-item text-muted text-center">Aucun webinaire prévu</li>

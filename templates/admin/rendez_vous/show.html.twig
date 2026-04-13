@@ -1,0 +1,49 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}RDV #{{ rdv.id }}{% endblock %}
+{% block page_title %}Détail du rendez-vous #{{ rdv.id }}{% endblock %}
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{{ path('admin_rdv') }}">Rendez-vous</a></li>
+  <li class="breadcrumb-item active">Détail</li>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header"><h3 class="card-title">Informations</h3></div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <tr><th style="width:35%">Élève</th>
+            <td>
+              {% if rdv.eleve is not null %}
+                {{ rdv.eleve.nomComplet }}
+              {% else %}
+                <span class="text-danger">Utilisateur supprimé</span>
+              {% endif %}
+            </td>
+          </tr>
+          <tr><th>Conseiller</th>
+            <td>
+              {% if rdv.conseiller is not null %}
+                {{ rdv.conseiller.nomComplet }}
+              {% else %}
+                <span class="text-danger">Utilisateur supprimé</span>
+              {% endif %}
+            </td>
+          </tr>
+          <tr><th>Date & heure</th><td>{{ rdv.dateHeure|date('d/m/Y à H:i') }}</td></tr>
+          <tr><th>Mode</th><td>{{ rdv.mode ?? '-' }}</td></tr>
+          <tr><th>Statut</th><td><span class="badge badge-{{ rdv.statutBadge }}">{{ rdv.statutLabel }}</span></td></tr>
+          <tr><th>Motif</th><td>{{ rdv.motif ?? '-' }}</td></tr>
+        </table>
+      </div>
+      <div class="card-footer">
+        <a href="{{ path('admin_rdv_edit', {id: rdv.id}) }}" class="btn btn-warning btn-sm">
+          <i class="fas fa-edit mr-1"></i>Modifier
+        </a>
+        <a href="{{ path('admin_rdv') }}" class="btn btn-default btn-sm ml-2">Retour</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

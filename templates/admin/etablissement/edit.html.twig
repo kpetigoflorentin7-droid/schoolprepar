@@ -1,0 +1,38 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Modifier — {{ etablissement.nom }}{% endblock %}
+{% block page_title %}Modifier : {{ etablissement.nom }}{% endblock %}
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{{ path('admin_etablissements') }}">Établissements</a></li>
+  <li class="breadcrumb-item active">Modifier</li>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-md-8">
+    <div class="card card-warning">
+      <div class="card-header"><h3 class="card-title">Modifier l'établissement</h3></div>
+      {{ form_start(form) }}
+      <div class="card-body">
+        <div class="form-group">{{ form_label(form.nom) }}{{ form_widget(form.nom) }}</div>
+        <div class="row">
+          <div class="col-md-6 form-group">{{ form_label(form.ville) }}{{ form_widget(form.ville) }}</div>
+          <div class="col-md-6 form-group">{{ form_label(form.telephone) }}{{ form_widget(form.telephone) }}</div>
+        </div>
+        <div class="form-group">{{ form_label(form.image) }}{{ form_widget(form.image) }}</div>
+        <div class="form-group">{{ form_label(form.adresse) }}{{ form_widget(form.adresse) }}</div>
+        <div class="form-group">{{ form_label(form.email) }}{{ form_widget(form.email) }}</div>
+        <div class="form-group">
+          {{ form_label(form.filieres) }}
+          <small class="text-muted d-block mb-1">Maintenez Ctrl pour sélectionner plusieurs filières.</small>
+          {{ form_widget(form.filieres) }}
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-warning"><i class="fas fa-save mr-1"></i>Enregistrer</button>
+        <a href="{{ path('admin_etablissements') }}" class="btn btn-default ml-2">Annuler</a>
+      </div>
+      {{ form_end(form) }}
+    </div>
+  </div>
+</div>
+{% endblock %}

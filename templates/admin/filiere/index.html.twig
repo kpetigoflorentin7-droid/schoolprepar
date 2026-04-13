@@ -1,52 +1,57 @@
 {% extends 'admin/base.html.twig' %}
-
-{% block title %}Gestion des Filières – Admin SchoolPrepar{% endblock %}
-{% block page_title %}Filières{% endblock %}
-{% block breadcrumb %}
-  <li class="breadcrumb-item active">Filières</li>
-{% endblock %}
+{% block title %}Filières{% endblock %}
+{% block page_title %}Gestion des Filières{% endblock %}
+{% block breadcrumb %}<li class="breadcrumb-item active">Filières</li>{% endblock %}
 
 {% block body %}
-  <div class="card">
-    <div class="card-header sp-header d-flex justify-content-between align-items-center">
-      <h3 class="card-title"><i class="fas fa-book-open mr-2"></i>Liste des filières</h3>
-      <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-plus mr-1"></i>Ajouter</a>
+{% for type, msgs in app.flashes %}
+  {% for m in msgs %}
+    <div class="alert alert-{{ type == 'success' ? 'success' : 'danger' }} alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>{{ m }}
     </div>
-    <div class="card-body p-0">
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nom</th>
-            <th>Domaine</th>
-            <th>Durée</th>
-            <th>Niveau</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for filiere in filieres %}
-          <tr>
-            <td>{{ filiere.id }}</td>
-            <td><strong>{{ filiere.nom }}</strong></td>
-            <td><span class="badge-filiere">{{ filiere.domaine }}</span></td>
-            <td>{{ filiere.duree }}</td>
-            <td>{{ filiere.niveau }}</td>
-            <td>
-              <a href="{{ path('app_filiere_show', {id: filiere.id}) }}" class="btn btn-xs btn-info" target="_blank">
-                <i class="fas fa-eye"></i>
-              </a>
-              <a href="#" class="btn btn-xs btn-warning"><i class="fas fa-edit"></i></a>
-              <a href="#" class="btn btn-xs btn-danger" onclick="return confirm('Supprimer cette filière ?')">
-                <i class="fas fa-trash"></i>
-              </a>
-            </td>
-          </tr>
-          {% else %}
-          <tr><td colspan="6" class="text-center text-muted">Aucune filière enregistrée.</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+  {% endfor %}
+{% endfor %}
+
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h3 class="card-title mb-0"><i class="fas fa-book-open mr-2"></i>Liste des filières</h3>
+    <a href="{{ path('admin_filiere_new') }}" class="btn btn-primary btn-sm">
+      <i class="fas fa-plus mr-1"></i>Nouvelle filière
+    </a>
   </div>
+  <div class="card-body p-0">
+    <table class="table table-striped table-hover mb-0">
+      <thead class="thead-light">
+        <tr>
+          <th>#</th>
+          <th>Nom</th>
+          <th>Domaine</th>
+          <th>Durée</th>
+          <th>Établissements</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for f in filieres %}
+        <tr>
+          <td>{{ f.id }}</td>
+          <td><strong>{{ f.nom }}</strong></td>
+          <td>{{ f.domaine ?? '-' }}</td>
+          <td>{{ f.duree ? f.duree~' an(s)' : '-' }}</td>
+          <td><span class="badge badge-info">{{ f.nb_etablissements ?? 0 }}</span></td>
+          <td>
+            <a href="{{ path('admin_filiere_show', {id: f.id}) }}" class="btn btn-xs btn-info"><i class="fas fa-eye"></i></a>
+            <a href="{{ path('admin_filiere_edit', {id: f.id}) }}" class="btn btn-xs btn-warning"><i class="fas fa-edit"></i></a>
+            <form method="post" action="{{ path('admin_filiere_delete', {id: f.id}) }}" style="display:inline" onsubmit="return confirm('Supprimer cette filière ?')">
+              <input type="hidden" name="_token" value="{{ csrf_token('delete'~f.id) }}">
+              <button class="btn btn-xs btn-danger"><i class="fas fa-trash"></i></button>
+            </form>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="6" class="text-center text-muted py-4">Aucune filière enregistrée.{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}
