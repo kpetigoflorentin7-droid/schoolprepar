@@ -9,10 +9,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[Route('/admin')]
+#[IsGranted('ROLE_ADMIN')]
 class AdminDashboardController extends AbstractController
 {
-    #[Route('/admin', name: 'admin_dashboard')]
+    #[Route('', name: 'admin_dashboard')]
     public function index(EntityManagerInterface $em): Response
     {
         $stats = [
@@ -36,10 +39,10 @@ class AdminDashboardController extends AbstractController
                 : (in_array('ROLE_CONSEILLER', $roles, true) ? 'conseiller' : 'eleve');
 
             return [
-                'id' => $u->getId(),
-                'nom' => $u->getNomComplet(),
-                'email' => $u->getEmail(),
-                'role' => $role,
+                'id'     => $u->getId(),
+                'nom'    => $u->getNomComplet(),
+                'email'  => $u->getEmail(),
+                'role'   => $role,
                 'statut' => 'active',
             ];
         }, $utilisateursRecentsEntities);
@@ -68,15 +71,15 @@ class AdminDashboardController extends AbstractController
         $webinairesProchains = array_map(static function (Evenement $ev): array {
             return [
                 'titre' => $ev->getTitre(),
-                'date' => $ev->getDate()?->format('d/m/Y H:i') ?? '-',
+                'date'  => $ev->getDate()?->format('d/m/Y H:i') ?? '-',
                 'image' => $ev->getEtablissement()?->getImage(),
             ];
         }, $webinairesProchainsEntities);
 
         return $this->render('admin/dashboard.html.twig', [
-            'stats' => $stats,
+            'stats'                => $stats,
             'utilisateurs_recents' => $utilisateursRecents,
-            'filieres_populaires' => $filieresPopulaires,
+            'filieres_populaires'  => $filieresPopulaires,
             'webinaires_prochains' => $webinairesProchains,
         ]);
     }

@@ -5,13 +5,16 @@ namespace App\Controller;
 use App\Entity\Evenement;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class WebinaireController extends AbstractController
 {
+    private const WEBINAIRES_PER_PAGE = 10;
+
     #[Route('/webinaires', name: 'app_webinaires')]
-    public function index(EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em): Response
     {
         $events = $em->getRepository(Evenement::class)->findBy([], ['date' => 'ASC']);
 
@@ -25,8 +28,27 @@ class WebinaireController extends AbstractController
             ];
         }, $events);
 
+        $page = max(1, (int) $request->query->get('page', 1));
+        $total = count($webinaires);
+        $totalPages = max(1, (int) ceil($total / self::WEBINAIRES_PER_PAGE));
+
+        if ($page > $totalPages && $total > 0) {
+            return $this->redirectToRoute('app_webinaires', ['page' => $totalPages]);
+        }
+
+        $page = min($page, $totalPages);
+        $slice = array_slice($webinaires, ($page - 1) * self::WEBINAIRES_PER_PAGE, self::WEBINAIRES_PER_PAGE);
+
         return $this->render('front/filiere/index.html.twig', [
-            'filieres' => $webinaires,
+            'filieres' => $slice,
+            'item_show_route' => 'app_webinaire_show',
+            'pagination_route' => 'app_webinaires',
+            'pagination' => [
+                'page' => $page,
+                'perPage' => self::WEBINAIRES_PER_PAGE,
+                'total' => $total,
+                'totalPages' => $totalPages,
+            ],
         ]);
     }
 

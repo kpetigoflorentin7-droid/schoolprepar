@@ -51,9 +51,11 @@
           </td>
         </tr>
       {% else %}
-        <td><td colspan="7" class="text-center text-muted py-4">Aucun établissement enregistré.{% endfor %}
+        <tr><td colspan="7" class="text-center text-muted py-4">Aucun établissement enregistré.</td></tr>
+      {% endfor %}
       </tbody>
     </table>
   </div>
+  {% include 'admin/partials/pagination.html.twig' with { pagination_route: 'admin_etablissements', pagination: pagination } only %}
 </div>
 {% endblock %}

@@ -49,9 +49,11 @@
           </td>
         </tr>
       {% else %}
-        <tr><td colspan="6" class="text-center text-muted py-4">Aucune filière enregistrée.{% endfor %}
+        <tr><td colspan="6" class="text-center text-muted py-4">Aucune filière enregistrée.</td></tr>
+      {% endfor %}
       </tbody>
     </table>
   </div>
+  {% include 'admin/partials/pagination.html.twig' with { pagination_route: 'admin_filieres', pagination: pagination } only %}
 </div>
 {% endblock %}

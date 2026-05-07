@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Positive;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Url;
 
@@ -17,30 +19,46 @@ class FiliereType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom',    TextType::class,    ['attr' => ['class' => 'form-control']])
-            ->add('domaine',TextType::class,    ['required' => false, 'attr' => ['class' => 'form-control']])
-            ->add('duree',  IntegerType::class, ['required' => false, 'label' => 'Durée (années)', 'attr' => ['class' => 'form-control']])
-            ->add('image', TextType::class, [
-                'required' => false,
-                'label' => "URL de l'image",
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'https://exemple.com/image.jpg',
-                ],
+            ->add('nom', TextType::class, [
+                'label' => 'Nom de la filière',
+                'attr'  => ['class' => 'form-control', 'placeholder' => 'Ex : Génie Logiciel'],
                 'constraints' => [
-                    new Length(max: 1000, maxMessage: "L'URL est trop longue (1000 caractères max)."),
-                    new Url(message: "Entrez une URL valide (ex: https://...)."),
-                    new Regex(
-                        pattern: '/^https?:\/\//i',
-                        message: "Utilisez une URL web (http/https), pas une image base64.",
-                    ),
+                    new NotBlank(['message' => 'Le nom est obligatoire']),
+                    new Length(['max' => 150]),
                 ],
             ])
-            ->add('description', TextareaType::class, ['required' => false, 'attr' => ['class' => 'form-control', 'rows' => 4]])
+            ->add('domaine', TextType::class, [
+                'label'    => 'Domaine',
+                'required' => false,
+                'attr'     => ['class' => 'form-control', 'placeholder' => 'Ex : Informatique'],
+            ])
+            ->add('duree', IntegerType::class, [
+                'label'    => 'Durée (années)',
+                'required' => false,
+                'attr'     => ['class' => 'form-control', 'placeholder' => 'Ex : 3'],
+                'constraints' => [
+                    new Positive(['message' => 'La durée doit être un nombre positif']),
+                ],
+            ])
+            ->add('image', TextType::class, [
+                'required' => false,
+                'label'    => "URL de l'image",
+                'attr'     => ['class' => 'form-control', 'placeholder' => 'https://exemple.com/image.jpg'],
+                'constraints' => [
+                    new Length(['max' => 1000]),
+                    new Url(['message' => 'Entrez une URL valide (ex: https://...)']),
+                    new Regex(['pattern' => '/^https?:\/\//i', 'message' => 'Utilisez une URL http/https']),
+                ],
+            ])
+            ->add('description', TextareaType::class, [
+                'label'    => 'Description',
+                'required' => false,
+                'attr'     => ['class' => 'form-control', 'rows' => 4, 'placeholder' => 'Décrivez cette filière...'],
+            ])
             ->add('conditionsAdmission', TextareaType::class, [
                 'label'    => "Conditions d'admission",
                 'required' => false,
-                'attr'     => ['class' => 'form-control', 'rows' => 3],
+                'attr'     => ['class' => 'form-control', 'rows' => 3, 'placeholder' => 'Bac, concours...'],
             ]);
     }
 

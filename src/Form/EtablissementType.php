@@ -9,7 +9,9 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Url;
 
@@ -18,25 +20,69 @@ class EtablissementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom',       TextType::class,  ['attr' => ['class' => 'form-control']])
-            ->add('adresse',   TextType::class,  ['required' => false, 'attr' => ['class' => 'form-control']])
-            ->add('ville',     TextType::class,  ['required' => false, 'attr' => ['class' => 'form-control']])
-            ->add('email',     EmailType::class, ['required' => false, 'attr' => ['class' => 'form-control']])
-            ->add('telephone', TextType::class,  ['required' => false, 'attr' => ['class' => 'form-control']])
-            ->add('image', TextType::class, [
+            ->add('nom', TextType::class, [
+                'label' => "Nom de l'établissement",
+                'attr'  => [
+                    'class'       => 'form-control',
+                    'placeholder' => 'Ex : Université de Lomé',
+                ],
+                'constraints' => [
+                    new NotBlank(['message' => "Le nom de l'établissement est obligatoire"]),
+                    new Length(['max' => 150]),
+                ],
+            ])
+            ->add('adresse', TextType::class, [
+                'label'    => 'Adresse',
                 'required' => false,
-                'label' => "URL de l'image",
-                'attr' => [
-                    'class' => 'form-control',
+                'attr'     => [
+                    'class'       => 'form-control',
+                    'placeholder' => 'Ex : Rue de l\'Université',
+                ],
+            ])
+            ->add('ville', TextType::class, [
+                'label'    => 'Ville',
+                'required' => false,
+                'attr'     => [
+                    'class'       => 'form-control',
+                    'placeholder' => 'Ex : Lomé',
+                ],
+            ])
+            ->add('email', EmailType::class, [
+                'label'    => 'Email de contact',
+                'required' => false,
+                'attr'     => [
+                    'class'       => 'form-control',
+                    'placeholder' => 'contact@etablissement.tg',
+                ],
+                'constraints' => [
+                    new Email(['message' => "L'adresse e-mail '{{ value }}' est invalide"]),
+                ],
+            ])
+            ->add('telephone', TextType::class, [
+                'label'    => 'Téléphone',
+                'required' => false,
+                'attr'     => [
+                    'class'       => 'form-control',
+                    'placeholder' => 'Ex : +228 22 00 00 00',
+                ],
+                'constraints' => [
+                    new Length(['max' => 20]),
+                ],
+            ])
+            ->add('image', TextType::class, [
+                'label'    => "URL de l'image",
+                'required' => false,
+                'attr'     => [
+                    'class'       => 'form-control',
                     'placeholder' => 'https://exemple.com/ecole.jpg',
                 ],
                 'constraints' => [
-                    new Length(max: 1000, maxMessage: "L'URL est trop longue (1000 caractères max)."),
-                    new Url(message: "Entrez une URL valide (ex: https://...)."),
-                    new Regex(
-                        pattern: '/^https?:\/\//i',
-                        message: "Utilisez une URL web (http/https), pas une image base64.",
-                    ),
+                    new Length(['max' => 1000]),
+                    new Url(['message' => 'Entrez une URL valide (ex: https://...)']),
+                    new Regex([
+                        'pattern' => '/^https?:\/\//i',
+                        'message' => 'Utilisez une URL web (http/https)',
+                    ]),
                 ],
             ])
             ->add('filieres', EntityType::class, [

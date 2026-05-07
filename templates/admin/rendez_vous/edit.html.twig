@@ -11,18 +11,51 @@
   <div class="col-md-8">
     <div class="card card-warning">
       <div class="card-header"><h3 class="card-title">Modifier le rendez-vous</h3></div>
+
       {{ form_start(form) }}
       <div class="card-body">
+
+        {% if not form.vars.valid and form.vars.submitted %}
+          <div class="alert alert-danger">
+            <i class="fas fa-exclamation-triangle mr-2"></i>Veuillez corriger les erreurs ci-dessous.
+          </div>
+        {% endif %}
+
         <div class="row">
-          <div class="col-md-6 form-group">{{ form_label(form.eleve) }}{{ form_widget(form.eleve) }}</div>
-          <div class="col-md-6 form-group">{{ form_label(form.conseiller) }}{{ form_widget(form.conseiller) }}</div>
+          <div class="col-md-6 form-group">
+            {{ form_label(form.eleve) }}
+            {{ form_widget(form.eleve) }}
+            {{ form_errors(form.eleve) }}
+          </div>
+          <div class="col-md-6 form-group">
+            {{ form_label(form.conseiller) }}
+            {{ form_widget(form.conseiller) }}
+            {{ form_errors(form.conseiller) }}
+          </div>
         </div>
         <div class="row">
-          <div class="col-md-6 form-group">{{ form_label(form.dateHeure) }}{{ form_widget(form.dateHeure) }}</div>
-          <div class="col-md-6 form-group">{{ form_label(form.mode) }}{{ form_widget(form.mode) }}</div>
+          <div class="col-md-6 form-group">
+            {{ form_label(form.dateHeure) }}
+            {{ form_widget(form.dateHeure) }}
+            {{ form_errors(form.dateHeure) }}
+          </div>
+          <div class="col-md-6 form-group">
+            {{ form_label(form.mode) }}
+            {{ form_widget(form.mode) }}
+            {{ form_errors(form.mode) }}
+          </div>
         </div>
-        <div class="form-group">{{ form_label(form.statut) }}{{ form_widget(form.statut) }}</div>
-        <div class="form-group">{{ form_label(form.motif) }}{{ form_widget(form.motif) }}</div>
+        <div class="form-group">
+          {{ form_label(form.statut) }}
+          {{ form_widget(form.statut) }}
+          {{ form_errors(form.statut) }}
+        </div>
+        <div class="form-group">
+          {{ form_label(form.motif) }}
+          {{ form_widget(form.motif) }}
+          {{ form_errors(form.motif) }}
+        </div>
+
       </div>
       <div class="card-footer">
         <button type="submit" class="btn btn-warning"><i class="fas fa-save mr-1"></i>Enregistrer</button>

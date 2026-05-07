@@ -1,0 +1,17 @@
+{# pagination_route = nom Symfony, pagination = { page, perPage, total, totalPages } #}
+{% if pagination is defined and pagination.totalPages > 1 %}
+<div class="card-footer d-flex flex-wrap justify-content-between align-items-center py-3 bg-light border-top">
+  <small class="text-muted mb-2 mb-md-0">
+    Affichage {{ ((pagination.page - 1) * pagination.perPage) + 1 }}–{{ min(pagination.page * pagination.perPage, pagination.total) }}
+    sur {{ pagination.total }}
+  </small>
+  <div class="btn-group" role="group">
+    {% if pagination.page > 1 %}
+      <a href="{{ path(pagination_route, pagination.page == 2 ? {} : { page: pagination.page - 1 }) }}" class="btn btn-sm btn-outline-secondary">← Page précédente</a>
+    {% endif %}
+    {% if pagination.page < pagination.totalPages %}
+      <a href="{{ path(pagination_route, { page: pagination.page + 1 }) }}" class="btn btn-sm btn-outline-secondary">Page suivante →</a>
+    {% endif %}
+  </div>
+</div>
+{% endif %}

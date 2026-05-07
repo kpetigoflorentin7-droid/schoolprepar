@@ -1,4 +1,4 @@
-{% extends 'front/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Filières &amp; Webinaires – SchoolPrepar{% endblock %}
 
@@ -31,13 +31,13 @@
                   <div class="meeting-item">
                     <div class="thumb">
                       <div class="price"><span>Gratuit</span></div>
-                      <a href="{{ path('app_filiere_show', {id: filiere.id}) }}">
+                      <a href="{{ path(item_show_route, {id: filiere.id}) }}">
                         <img src="{{ filiere.image ?: asset('front/assets/images/meeting-01.jpg') }}" alt="{{ filiere.nom }}">
                       </a>
                     </div>
                     <div class="down-content">
                       <span class="badge-filiere">{{ filiere.domaine }}</span>
-                      <a href="{{ path('app_filiere_show', {id: filiere.id}) }}"><h4>{{ filiere.nom }}</h4></a>
+                      <a href="{{ path(item_show_route, {id: filiere.id}) }}"><h4>{{ filiere.nom }}</h4></a>
                       <p>{{ filiere.description ?: 'Description bientôt disponible.' }}</p>
                     </div>
                   </div>
@@ -47,6 +47,29 @@
                 {% endfor %}
               </div>
             </div>
+
+            {% if pagination is defined and pagination.totalPages > 1 %}
+            <div class="col-lg-12 mt-4 mb-5">
+              <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+                <p class="text-muted mb-0 small">
+                  Affichage {{ ((pagination.page - 1) * pagination.perPage) + 1 }}–{{ min(pagination.page * pagination.perPage, pagination.total) }}
+                  sur {{ pagination.total }}
+                </p>
+                <div class="d-flex align-items-center gap-2 flex-wrap justify-content-center">
+                  {% if pagination.page > 1 %}
+                    <div class="main-button-red">
+                      <a href="{{ path(pagination_route, pagination.page == 2 ? {} : {page: pagination.page - 1}) }}">← Page précédente</a>
+                    </div>
+                  {% endif %}
+                  {% if pagination.page < pagination.totalPages %}
+                    <div class="main-button-red">
+                      <a href="{{ path(pagination_route, {page: pagination.page + 1}) }}">Page suivante →</a>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endif %}
 
           </div>
         </div>
